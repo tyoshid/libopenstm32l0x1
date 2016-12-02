@@ -1,0 +1,1 @@
+../../miniblink/hardware/miniblink.sch

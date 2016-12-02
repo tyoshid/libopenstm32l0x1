@@ -1,0 +1,1 @@
+../../lpuart/hardware/lpuart.sch

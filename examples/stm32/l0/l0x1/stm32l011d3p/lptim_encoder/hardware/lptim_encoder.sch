@@ -1,0 +1,1 @@
+../../tim_encoder/hardware/tim_encoder.sch
