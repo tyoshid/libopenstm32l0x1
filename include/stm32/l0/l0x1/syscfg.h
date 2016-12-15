@@ -22,7 +22,7 @@
  *
  * RM0377: Reference manual
  * Ultra-low-power STM32L0x1 advanced ARM-based 32-bit MCUs
- * (30-Aug-2016 Rev 6)
+ * (14-Nov-2016 Rev 7)
  *
  * 9  System configuration controller (SYSCFG)
  */
@@ -102,12 +102,12 @@
 
 #define SYSCFG_CFGR3_REF_LOCK		(1 << 31)
 #define SYSCFG_CFGR3_VREFINT_RDYF	(1 << 30)
-#define SYSCFG_CFGR3_ENBUF_VREFINT_COMP	(1 << 12)
+#define SYSCFG_CFGR3_ENBUF_VREFINT_COMP2	(1 << 12)
 #define SYSCFG_CFGR3_ENBUF_SENSOR_ADC	(1 << 9)
 #define SYSCFG_CFGR3_ENBUF_VREFINT_ADC	(1 << 8)
 #define SYSCFG_CFGR3_SEL_VREF_OUT1	(1 << 5)
 #define SYSCFG_CFGR3_SEL_VREF_OUT0	(1 << 4)
-#define SYSCFG_CFGR3_EN_VREFINT		(1 << 0) /* ??? */
+#define SYSCFG_CFGR3_EN_VREFINT		(1 << 0)
 
 /* VREFINT_ADC connection bit */
 #define SYSCFG_CFGR3_SEL_VREF_OUT_NONE	(0 << 4)
@@ -147,9 +147,10 @@ enum syscfg_exti {
 
 /* VREFINT and temperature sensor control */
 enum {
+	SYSCFG_EN_VREFINT = (1 << 0),
 	SYSCFG_VREFINT_ADC = (1 << 8),
 	SYSCFG_SENSOR_ADC = (1 << 9),
-	SYSCFG_VREFINT_COMP = ((1 << 12) | 1) /* ??? */
+	SYSCFG_VREFINT_COMP2 = (1 << 12)
 };
 
 /* VREFINT_ADC connection */

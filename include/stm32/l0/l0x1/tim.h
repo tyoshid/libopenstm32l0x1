@@ -22,7 +22,7 @@
  *
  * RM0377: Reference manual
  * Ultra-low-power STM32L0x1 advanced ARM-based 32-bit MCUs
- * (30-Aug-2016 Rev 6)
+ * (14-Nov-2016 Rev 7)
  *
  * 16  General-purpose timers (TIM2/TIM3)
  * 17  General-purpose timers (TIM21/22)
@@ -875,7 +875,7 @@ enum {
 	TIM3_PB5_TIM22_CH2 = 0,
 	TIM3_PB5_CH2 = (1 << 3),
 	TIM3_TI1_GPIO = (1 << 2),
-	TIM3_ETR_GPIO = 0,
+	TIM3_ETR_GPIO = 0
 };
 
 /* TIM21 TI2 remap */

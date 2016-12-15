@@ -22,7 +22,7 @@
  *
  * RM0377: Reference manual
  * Ultra-low-power STM32L0x1 advanced ARM-based 32-bit MCUs
- * (30-Aug-2016 Rev 6)
+ * (14-Nov-2016 Rev 7)
  *
  * 24  Universal synchronous asynchronous receiver transmitter (USART)
  */

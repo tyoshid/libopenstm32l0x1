@@ -22,7 +22,7 @@
  *
  * RM0377: Reference manual
  * Ultra-low-power STM32L0x1 advanced ARM-based 32-bit MCUs
- * (30-Aug-2016 Rev 6)
+ * (14-Nov-2016 Rev 7)
  *
  * 25  Low-power universal asynchronous receiver transmitter (LPUART)
  */
@@ -309,8 +309,8 @@ int lpuart_get_interrupt_mask(enum lpuart lpuart, int interrupt);
 int lpuart_get_interrupt_status(enum lpuart lpuart, int interrupt);
 void lpuart_clear_interrupt(enum lpuart lpuart, int interrupt);
 void lpuart_set_wakeup_interrupt(enum lpuart lpuart, enum lpuart_wuf wuf);
-void lpuart_flush_receive_data(enum lpuart);
-void lpuart_enter_mute_mode(enum lpuart);
-void lpuart_send_break(enum lpuart);
+void lpuart_flush_receive_data(enum lpuart lpuart);
+void lpuart_enter_mute_mode(enum lpuart lpuart);
+void lpuart_send_break(enum lpuart lpuart);
 void lpuart_enable_clock_in_stop_mode(enum lpuart lpuart);
 void lpuart_disable_clock_in_stop_mode(enum lpuart lpuart);
