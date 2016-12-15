@@ -98,7 +98,7 @@ static void delay_us(int us)
 static void comp_setup(void)
 {
 	rcc_enable_clock(RCC_SYSCFG);
-	syscfg_enable_vrefint(SYSCFG_VREFINT_COMP);
+	syscfg_enable_vrefint(SYSCFG_VREFINT_COMP2 | SYSCFG_EN_VREFINT);
 	comp_init(COMP1, COMP_COMP2, COMP_VREFINT, COMP_ENABLE);
 	comp_init(COMP2, COMP_PA7, COMP_VREFINT, COMP_FAST | COMP_ENABLE);
 	delay_us(COMP2_T_START_FAST);
