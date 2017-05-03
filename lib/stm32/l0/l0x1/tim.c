@@ -51,6 +51,34 @@ static const int ccr[] = {
 	TIM22_CCR1,
 	TIM22_CCR2,
 };
+static const struct reg_shift ccmr[] = {
+	{TIM2_CCMR1, 0},
+	{TIM2_CCMR1, 8},
+	{TIM2_CCMR2, 0},
+	{TIM2_CCMR2, 8},
+	{TIM3_CCMR1, 0},
+	{TIM3_CCMR1, 8},
+	{TIM3_CCMR2, 0},
+	{TIM3_CCMR2, 8},
+	{TIM21_CCMR1, 0},
+	{TIM21_CCMR1, 8},
+	{TIM22_CCMR1, 0},
+	{TIM22_CCMR1, 8}
+};
+static const struct reg_shift ccer[] = {
+	{TIM2_CCER, 0},
+	{TIM2_CCER, 4},
+	{TIM2_CCER, 8},
+	{TIM2_CCER, 12},
+	{TIM3_CCER, 0},
+	{TIM3_CCER, 4},
+	{TIM3_CCER, 8},
+	{TIM3_CCER, 12},
+	{TIM21_CCER, 0},
+	{TIM21_CCER, 4},
+	{TIM22_CCER, 0},
+	{TIM22_CCER, 4}
+};
 
 void tim_set_prescaler(enum tim tim, int pcount)
 {
@@ -277,34 +305,6 @@ void tim_generate_event(enum tim tim, int event)
 
 void tim_set_capture_compare_mode(enum tim_cc tim_cc, int mode)
 {
-	static const struct reg_shift ccmr[] = {
-		{TIM2_CCMR1, 0},
-		{TIM2_CCMR1, 8},
-		{TIM2_CCMR2, 0},
-		{TIM2_CCMR2, 8},
-		{TIM3_CCMR1, 0},
-		{TIM3_CCMR1, 8},
-		{TIM3_CCMR2, 0},
-		{TIM3_CCMR2, 8},
-		{TIM21_CCMR1, 0},
-		{TIM21_CCMR1, 8},
-		{TIM22_CCMR1, 0},
-		{TIM22_CCMR1, 8}
-	};
-	static const struct reg_shift ccer[] = {
-		{TIM2_CCER, 0},
-		{TIM2_CCER, 4},
-		{TIM2_CCER, 8},
-		{TIM2_CCER, 12},
-		{TIM3_CCER, 0},
-		{TIM3_CCER, 4},
-		{TIM3_CCER, 8},
-		{TIM3_CCER, 12},
-		{TIM21_CCER, 0},
-		{TIM21_CCER, 4},
-		{TIM22_CCER, 0},
-		{TIM22_CCER, 4}
-	};
 	int r;
 
 	r = MMIO32(ccmr[tim_cc].addr);
@@ -318,6 +318,16 @@ void tim_set_capture_compare_mode(enum tim_cc tim_cc, int mode)
 	else
 		MMIO32(ccer[tim_cc].addr) = r |
 			(mode & 0xf00) << (ccer[tim_cc].shift - 8);
+}
+
+void tim_enable_capture_compare(enum tim_cc tim_cc)
+{
+	MMIO32(ccer[tim_cc].addr) |= 1 << ccer[tim_cc].shift;
+}
+
+void tim_disable_capture_compare(enum tim_cc tim_cc)
+{
+	MMIO32(ccer[tim_cc].addr) &= ~(1 << ccer[tim_cc].shift);
 }
 
 void tim_set_capture_compare_value(enum tim_cc tim_cc, int value)

@@ -956,6 +956,8 @@ void tim_enable_dma(enum tim tim, int request);
 void tim_disable_dma(enum tim tim, int request);
 void tim_generate_event(enum tim tim, int event);
 void tim_set_capture_compare_mode(enum tim_cc tim_cc, int mode);
+void tim_enable_capture_compare(enum tim_cc tim_cc);
+void tim_disable_capture_compare(enum tim_cc tim_cc);
 void tim_set_capture_compare_value(enum tim_cc tim_cc, int value);
 int tim_get_capture_compare_value(enum tim_cc tim_cc);
 void tim_setup_dma(enum tim tim, int dba, int dbl);
