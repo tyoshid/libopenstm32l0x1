@@ -88,16 +88,11 @@ void rtc_disable_daylight_saving_time(void)
 
 void rtc_enable_alarm_a(int time, int ss)
 {
-	int r;
-
-	r = MMIO32(RTC_CR);
-	if (r & RTC_CR_ALRAE)
-		MMIO32(RTC_CR) = r & ~RTC_CR_ALRAE;
 	while (!(MMIO32(RTC_ISR) & RTC_ISR_ALRAWF))
 		;
 	MMIO32(RTC_ALRMAR) = time;
 	MMIO32(RTC_ALRMASSR) = ss & 0x0f007fff;
-	MMIO32(RTC_CR) = r | RTC_CR_ALRAE;
+	MMIO32(RTC_CR) |= RTC_CR_ALRAE;
 }
 
 void rtc_disable_alarm_a(void)
@@ -107,16 +102,11 @@ void rtc_disable_alarm_a(void)
 
 void rtc_enable_alarm_b(int time, int ss)
 {
-	int r;
-
-	r = MMIO32(RTC_CR);
-	if (r & RTC_CR_ALRBE)
-		MMIO32(RTC_CR) = r & ~RTC_CR_ALRBE;
 	while (!(MMIO32(RTC_ISR) & RTC_ISR_ALRBWF))
 		;
 	MMIO32(RTC_ALRMBR) = time;
 	MMIO32(RTC_ALRMBSSR) = ss & 0x0f007fff;
-	MMIO32(RTC_CR) = r | RTC_CR_ALRBE;
+	MMIO32(RTC_CR) |= RTC_CR_ALRBE;
 }
 
 void rtc_disable_alarm_b(void)
@@ -128,12 +118,10 @@ void rtc_enable_wakeup_timer(enum rtc_wakeup_clock wucksel, int autoreload)
 {
 	int r;
 
-	r = MMIO32(RTC_CR);
-	if (r & RTC_CR_WUTE)
-		MMIO32(RTC_CR) = r & ~RTC_CR_WUTE;
 	while (!(MMIO32(RTC_ISR) & RTC_ISR_WUTWF))
 		;
 	MMIO32(RTC_WUTR) = autoreload & 0xffff;
+	r = MMIO32(RTC_CR);
 	r &= ~(RTC_CR_WUCKSEL2 | RTC_CR_WUCKSEL1 | RTC_CR_WUCKSEL0);
 	MMIO32(RTC_CR) = r | wucksel | RTC_CR_WUTE;
 }
@@ -282,11 +270,7 @@ int rtc_get_interrupt_status(int interrupt)
 
 void rtc_clear_interrupt(int interrupt)
 {
-	MMIO32(RTC_ISR) &= ~(interrupt & (RTC_ISR_TAMP3F | RTC_ISR_TAMP2F |
-					  RTC_ISR_TAMP1F | RTC_ISR_TSOVF |
-					  RTC_ISR_TSF | RTC_ISR_WUTF |
-					  RTC_ISR_ALRBF | RTC_ISR_ALRAF |
-					  RTC_ISR_RSF));
+	MMIO32(RTC_ISR) &= ~interrupt;
 }
 
 void rtc_set_rtc_calib(enum rtc_cal_output cosel)
@@ -362,20 +346,24 @@ void rtc_setup_tamper(int precharge, int sample_div, int filter_count,
 	} else {
 		tamp = 1 << 15; /* TAMPPUDIS */
 	}
-	for (i = 0; i < 8; i++) {
-		if (sample_div == 32768 / (1 << i))
-			break;
+	if (filter_count || sample_div) {
+		for (i = 0; i < 8; i++) {
+			if (sample_div == 32768 / (1 << i))
+				break;
+		}
+		if (i >= 8)
+			return;
+		tamp |= i << 8;		/* TAMPFREQ */
 	}
-	if (i >= 8)
-		return;
-	tamp |= i << 8;		/* TAMPFREQ */
-	for (i = 0; i < 4; i++) {
-		if (filter_count == 1 << i)
-			break;
+	if (filter_count) {
+		for (i = 1; i < 4; i++) {
+			if (filter_count == 1 << i)
+				break;
+		}
+		if (i >= 4)
+			return;
+		tamp |= i << 11;	/* TAMPFLT */
 	}
-	if (i >= 4)
-		return;
-	tamp |= i << 11;	/* TAMPFLT */
 	if (timestamp)
 		tamp |= RTC_TAMPCR_TAMPTS;
 	r = MMIO32(RTC_TAMPCR);
