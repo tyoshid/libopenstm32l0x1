@@ -48,12 +48,11 @@ SECTIONS
 		*(.rodata*)
 	} > REGION_RODATA
 	. = .;			/* Orphan sections */
-	_rodata_end = .;
-	.data : AT (_rodata_end)
+	.data :
 	{
 		_data_start = .;
 		*(.data*)
-	} > REGION_DATA
+	} > REGION_DATA AT > REGION_RODATA
 	_data_size = SIZEOF(.data);
 	_data_load_start = LOADADDR(.data);
 	.bss :

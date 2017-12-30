@@ -46,12 +46,6 @@ ifneq ($(strip $(USARTUTIL_DEVICE)),)
 USARTUTIL	+= -d $(USARTUTIL_DEVICE)
 endif
 
-ROMSIZE		:= $(shell awk '$$1 == "ROM" { print $$8 * 1024 }' \
-		   $(LIBDIR)/lib/stm32/l0/l0x1/$(LDSCRIPT))
-SIZECHECK	= awk '{ print }; $$1 != "text" && $$1 + $$2 > $(ROMSIZE) \
-		  { printf("ROM overflowed ! (%d + %d > %d)\n", $$1, $$2, \
-		  $(ROMSIZE)); exit 1 }'
-
 .PHONY: all clean flash
 
 all: $(OUTFILES)
@@ -76,7 +70,7 @@ all: $(OUTFILES)
 $(NAME).elf: $(OBJS)
 	echo "  $@"
 	$(LD) -o $@ $(OBJS) $(LDFLAGS)
-	$(SIZE) $(NAME).elf | $(SIZECHECK)
+	$(SIZE) $(NAME).elf
 
 %.o: %.c
 	echo "  $<"

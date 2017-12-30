@@ -1,5 +1,5 @@
 /*
- * Default STM32L011x3 linker script
+ * Default STM32L071xZ linker script
  *
  * Copyright 2016 Toshiaki Yoshida <yoshida@mpc.net>
  *
@@ -22,8 +22,8 @@ OUTPUT_ARCH(arm);
 
 MEMORY
 {
-	ROM : ORIGIN = 0x08000000, LENGTH = 8K
-	RAM : ORIGIN = 0x20000000, LENGTH = 2K
+	ROM : ORIGIN = 0x08000000, LENGTH = 192K
+	RAM : ORIGIN = 0x20000000, LENGTH = 20K
 }
 
 REGION_ALIAS("REGION_TEXT", ROM);
