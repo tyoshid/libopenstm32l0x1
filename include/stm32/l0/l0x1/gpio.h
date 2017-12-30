@@ -21,7 +21,7 @@
  * STMicroelectronics(www.st.com)
  *
  * RM0377: Reference manual
- * Ultra-low-power STM32L0x2 advanced ARM-based 32-bit MCUs
+ * Ultra-low-power STM32L0x1 advanced ARM-based 32-bit MCUs
  * (14-Nov-2016 Rev 7)
  *
  * 8  General-purpose I/Os (GPIO)
@@ -612,6 +612,13 @@ enum {
  * PE13
  * PE14
  * PE15
+ */
+/*
+ *	AF0
+ * PH0
+ * PH1
+ * PH9
+ * PH10
  */
 
 /* --- Function prototypes ------------------------------------------------- */
