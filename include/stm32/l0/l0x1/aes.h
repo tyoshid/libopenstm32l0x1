@@ -186,6 +186,9 @@ enum {
 
 void aes_init(enum aes_mode mode, enum aes_chaining_mode chaining,
 	      enum aes_data_type type);
+void aes_set_mode(enum aes_mode mode);
+	void aes_set_chaining_mode(enum aes_chaining_mode chaining);
+	void aes_set_data_type(enum aes_data_type type);
 void aes_set_key(int *key);
 void aes_get_key(int *key);
 void aes_set_init_vector(int *vec);

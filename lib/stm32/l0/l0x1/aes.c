@@ -34,6 +34,33 @@ void aes_init(enum aes_mode mode, enum aes_chaining_mode chaining,
 	MMIO32(AES_CR) = r | (mode << 3) | (chaining << 5) | (type << 1);
 }
 
+void aes_set_mode(enum aes_mode mode)
+{
+	int r;
+	
+	r = MMIO32(AES_CR);
+	r &= ~(AES_CR_MODE1 | AES_CR_MODE0);
+	MMIO32(AES_CR) = r | (mode << 3);
+}
+
+void aes_set_chaining_mode(enum aes_chaining_mode chaining)
+{
+	int r;
+	
+	r = MMIO32(AES_CR);
+	r &= ~(AES_CR_CHMOD1 | AES_CR_CHMOD0);
+	MMIO32(AES_CR) = r | (chaining << 5);
+}
+
+void aes_set_data_type(enum aes_data_type type)
+{
+	int r;
+	
+	r = MMIO32(AES_CR);
+	r &= ~(AES_CR_DATATYPE1 | AES_CR_DATATYPE0);
+	MMIO32(AES_CR) = r | (type << 1);
+}
+
 void aes_set_key(int *key)
 {
 	int i;
