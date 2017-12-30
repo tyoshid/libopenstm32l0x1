@@ -34,10 +34,8 @@ static int putchar(int c)
 
 int puts(const char *s)
 {
-	if (s) {
-		while (*s)
-			putchar(*s++);
-	}
+	while (*s)
+		putchar(*s++);
 	putchar('\n');
 	return 0;
 }
@@ -71,9 +69,6 @@ int printf(const char *fmt, ...)
 
 	va_start(argp, fmt);
 	n = 0;
-	if (!fmt)
-		return 0;
-	
 	while (*fmt) {
 		if (*fmt != '%') {
 			putchar(*fmt++);

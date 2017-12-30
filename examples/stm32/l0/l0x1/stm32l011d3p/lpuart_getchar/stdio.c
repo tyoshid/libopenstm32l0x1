@@ -89,9 +89,6 @@ int printf(const char *fmt, ...)
 
 	va_start(argp, fmt);
 	n = 0;
-	if (!fmt)
-		return 0;
-	
 	while (*fmt) {
 		if (*fmt != '%') {
 			putchar(*fmt++);
